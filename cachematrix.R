@@ -1,11 +1,12 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The following two functions allow caching the inverse of a Matrix
 
-## Write a short comment describing this function
+## First function create a list of functions to validate
+## the input matrix for squreness and then cache its inverse
 
 makeCacheMatrix <- function(x=matrix()) {
         m <-NULL
         set <- function (y){ 
+                ## check for squreness
                 check <- class(try(solve(y),silent=T))=="matrix"
                 if(check==TRUE){
                         x <<- y      
@@ -22,6 +23,10 @@ makeCacheMatrix <- function(x=matrix()) {
              setInv = setInv,
              getInv = getInv)
 }
+
+## Second function cachesolve() computes the inverse
+## of the matrix and returns either from cache or
+## recalculates.
 
 cacheSolve <- function(x, ...) {
         m <- x$getInv()
