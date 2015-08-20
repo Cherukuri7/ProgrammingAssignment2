@@ -11,6 +11,7 @@ makeCacheMatrix <- function(x=matrix()) {
                 if(check==TRUE){
                         x <<- y      
                         m <<- NULL}
+                ## stop setting the matrix if not squre
                 else{
                         stop("Matrix must be squre")}
                 
