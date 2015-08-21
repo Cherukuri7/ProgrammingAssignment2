@@ -6,7 +6,7 @@
 makeCacheMatrix <- function(x=matrix()) {
         m <-NULL
         set <- function (y){ 
-                ## check for squreness
+                ## check for squreness of input matrix
                 check <- class(try(solve(y),silent=T))=="matrix"
                 if(check==TRUE){
                         x <<- y      
@@ -16,9 +16,9 @@ makeCacheMatrix <- function(x=matrix()) {
                         stop("Matrix must be squre")}
                 
         }
-        get <- function() x
-        setInv <- function(solve) m <<- solve
-        getInv <- function() m
+        get <- function() x    ## provides input to cacheSolve function
+        setInv <- function(s) m <<- s   ## Stores inverse calculated by cacheSolve
+        getInv <- function() m   ## provides comparison to cacheSolve
         
         list(set = set, get = get,
              setInv = setInv,
@@ -30,13 +30,15 @@ makeCacheMatrix <- function(x=matrix()) {
 ## recalculates.
 
 cacheSolve <- function(x, ...) {
-        m <- x$getInv()
+        m <- x$getInv()  ## returns NULL when executed first time
         if(!is.null(m)) {
-                message("getting cached data")
+                message("getting cached Inverse Matrix")
                 return(m)
         }
-        data <- x$get()
-        m <- solve(data)
-        x$setInv(m)
-        m
+        else {  ## This code executes if m is NULL
+                matrx <- x$get()  ## retrieves matrix
+                m <- solve(matrx)  ## solves for inverse
+                x$setInv(m)  ## sets m value in main function using special operator
+        }
+        m   ## returns inverse matrix
 }
